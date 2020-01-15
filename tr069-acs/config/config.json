@@ -1,0 +1,19 @@
+{
+  "MONGODB_CONNECTION_URL" : "mongodb://127.0.0.1/genieacs",
+  "CWMP_INTERFACE" : "127.0.0.1",
+  "CWMP_PORT" : 7647,
+  "CWMP_SSL" : false,
+  "CWMP_LOG_FILE" : "/var/log/tr069-acs/cwmp.log",
+  "CWMP_ACCESS_LOG_FILE" : "/var/log/tr069-acs/cwmp-access.log",
+  "NBI_INTERFACE" : "127.0.0.1",
+  "NBI_PORT" : 7557,
+  "NBI_LOG_FILE" : "/var/log/tr069-acs/nbi.log",
+  "NBI_ACCESS_LOG_FILE" : "/var/log/tr069-acs/nbi-access.log",
+  "FS_INTERFACE" : "0.0.0.0",
+  "FS_PORT" : 9002,
+  "FS_SSL": false,
+  "FS_IP" : "39.98.177.46",
+  "FS_LOG_FILE" : "/var/log/tr069-acs/fs.log",
+  "FS_ACCESS_LOG_FILE" : "/var/log/tr069-acs/fs-access.log",
+  "XML_RECOVER" : {"recover" : true}
+}

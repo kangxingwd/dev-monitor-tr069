@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-store,must-revalidate">
+    <meta http-equiv="expires" content="0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>文件列表</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="../../css/manage.css" />
+    <script src="../../js/lib/jquery-1.11.3.min.js"></script>
+    <script src="../../js/lib/jquery.cookie.js"></script>
+    <script src="../../js/lib/jquery.form.js"></script>
+    <script src="../../js/lib/bootstrap.min.js"></script>
+    <script src="../../js/lib/jquery.dataTables.min.js"></script>
+    <script src="../../js/lib/highcharts.js"></script>
+    <script src="../../js/lib/radialIndicator.min.js"></script>
+    <script src="../../js/common/common.js"></script>
+    <script src="../../js/common/jquery.ext.verify.js"></script>
+    <script src="../../js/admin_status/filelist.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <script src="../../js/common/header.ajax.js"></script>
+    <div id="main">
+        <div class="content">
+            <div>
+                <table id="table_flowctrl" class="table table-striped" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>序号
+                                <i></i>
+                            </th>
+                            <th>名称
+                                <i></i>
+                            </th>
+                            <th>OUI
+                                <i></i>
+                            </th>
+                            <th>类型
+                                <i></i>
+                            </th>
+                            <th>设备型号
+                                <i></i>
+                            </th>
+                            <th>版本
+                                <i></i>
+                            </th>
+                            <th>操作
+                                <i></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="modal_edit" class="modal fade" tabindex=-1>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">上传文件</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label for="">文件类型</label>
+                        <select name="" id="file_type">
+                            <option value="1 Firmware Upgrade Image">固件升级映像</option>
+                            <option value="2 Web Content">自定义文件</option>
+                            <!-- <option value="3 Vendor Configuration File">自定义文件</option>
+                            <option value="4 Tone File">自定义文件</option>
+                            <option value="5 Ringer File">自定义文件</option> -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="">文件</label>
+                        <input type="file" name="" id="file_content" verify="notspace"
+                            style="position: absolute;opacity: 0;">
+                        <div class="over">
+                            <span id="tab-cover">未选择文件</span>
+                            <img src="../../images/file.png" alt="" style="width:20px;">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="">OUI</label>
+                        <input type="text" name="" id="oui">
+                    </div>
+                    <div>
+                        <label for="">产品型号</label>
+                        <input type="text" name="" id="productClass">
+                    </div>
+                    <div>
+                        <label for="">版本</label>
+                        <input type="text" name="" id="version">
+                    </div>
+                    <div class="tip"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-zx" onclick="DoSave()">保存</button>
+                    <!-- <div class="tip"></div> -->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div id="modal_tips" class="modal fade" tabindex=-1>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-p">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-zx btn-modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- spin -->
+    <div id="modal_spin" class="modal fade">
+        <div class="modal-dialog loading-screen-centertop">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <i class="icon-spin icon-spinner icon-4x"></i>
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

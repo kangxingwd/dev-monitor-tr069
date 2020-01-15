@@ -1,0 +1,131 @@
+<div id="header_ajax">
+    <div class="float-right out" style="margin-right: 20px;"><span class="admin-user"></span><img src="../../images/out.png"
+            alt="" style="margin-top: -3px;margin-left:2px">
+    </div>
+    <div class="float-right system-time">
+        <span>当前时间:</span>
+        <span id="time"></span>
+    </div>
+</div>
+<div id="left_menu">
+    <div class="main-title">CWMP管理平台</div>
+    <div class="group">
+        <div class="title">
+            <img src="../../images/mar.png" alt="">
+            <span> 设备管理</span>
+            <img class="title-right" src="../../images/right.png" alt="">
+        </div>
+        <div class="menu">
+            <a href="../admin_status/index.html"><span>首页</span></a>
+            <a href="../admin_status/overview.html?pageNumber=1&pageSize=10" class="det"><span>设备总览</span></a>
+            <a href="../admin_status/map.html"><span>设备地图</span></a>
+            <a href="../admin_status/task.html?pageNumber=1&pageSize=10" class="dets"><span>批量任务</span></a>
+            <a href="../admin_status/filelist.html"><span>文件列表</span></a>
+            <a href="../admin_status/taskobj.html"><span>任务对象</span></a>
+            <a href="../admin_status/eventnotification.html"><span>事件通知</span></a>
+        </div>
+    </div>
+    <div class="group acc">
+        <div class="title">
+            <img src="../../images/age.png" alt="">
+            <span>代理商管理</span>
+            <img class="title-right" src="../../images/right.png" alt="">
+        </div>
+        <div class="menu">
+            <a href="../admin_agent/distribution.html"><span>设备分配</span></a>
+            <a href="../admin_agent/management.html"><span>账号管理</span></a>
+        </div>
+    </div>
+    <div class="group">
+        <div class="title">
+            <img src="../../images/acc.png" alt="">
+            <span>账号安全</span>
+            <img class="title-right" src="../../images/right.png" alt="">
+        </div>
+        <div class="menu">
+            <a href="../admin_account/account.html"><span>账号安全</span></a>
+        </div>
+    </div>
+    <div class="group">
+        <div class="title">
+            <img src="../../images/system.png" alt="">
+            <span>系统</span>
+            <img class="title-right" src="../../images/right.png" alt="">
+        </div>
+        <div class="menu">
+            <a href="../admin_system/system.html"><span>系统状态</span></a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#left_menu .group a").each(function (index, element) {
+        var httpUrl = window.location.href;
+        if (httpUrl.indexOf($(element).attr("href").split('/')[2]) > -1) {
+            $(element).parent().show();
+            $(element).parent().siblings(".title").addClass("selected");
+            $(element).parent().siblings(".title").find("img.title-right").attr("src", "../../images/down.png");
+            $(element).addClass("selected-menu");
+            return false;
+        }
+
+        if (httpUrl.indexOf("details") > -1 || httpUrl.indexOf("overview") > -1) {
+            $(".det").parent().show();
+            $(".det").parent().siblings(".title").addClass("selected");
+            $(".det").parent().siblings(".title").find("img.title-right").attr("src", "../../images/down.png");
+            $(".det").addClass("selected-menu");
+            return false;
+        }
+        if (httpUrl.indexOf("taskdetail") > -1){
+            $(".dets").parent().show();
+            $(".dets").parent().siblings(".title").addClass("selected");
+            $(".dets").parent().siblings(".title").find("img.title-right").attr("src", "../../images/down.png");
+            $(".dets").addClass("selected-menu");
+            return false;
+        }
+    });
+
+
+    $("#left_menu").on("click", ".group .title", function () {
+        if ($(this).siblings("menu").is(":animated")) return;
+        if (!($(this).hasClass("selected"))) {
+            $("#left_menu .title").removeClass("selected");
+            $(".title-right").attr("src", "../../images/down.png");
+            $(this).addClass("selected");
+            $(this).siblings(".menu").slideDown()
+                .parent().siblings(".group").removeClass("selected")
+                .find("img.title-right").attr("src", "../../images/right.png")
+                .parent().find(".menu").slideUp();
+            $(this).parent().siblings(".group").find(".menu").slideUp();
+        } else {
+            $("#left_menu .title").removeClass("selected");
+            $(this).siblings(".menu").slideUp();
+            $(this).find("img.title-right").attr("src", "../../images/right.png");
+        }
+    });
+
+    $(".out").on("click", function () {
+        createModalTips("确定退出管理平台吗？", "loginOut");
+    });
+
+    function loginOut() {
+        $.cookie('token', '', {
+            expires: -1,
+            path: "/"
+        });
+        window.location.href = '../admin_login/login.html';
+    }
+
+    $(function () {
+        setInterval(getNewData, 1000);
+        $(".admin-user").html($.cookie("login_user"));
+        if ($.cookie('level') == '3' || $.cookie('level') == 3) {
+            $(".acc").hide();
+        }
+    })
+
+    function getNewData() {
+        var newDate = new Date();
+        $("#time").html(newDate.format('yyyy/MM/dd hh:mm:ss'));
+    }
+</script>

@@ -1,0 +1,17 @@
+FROM tbwl/tr069-csac:V1.0
+
+COPY web/ /var/www
+COPY tr069-srv/ /home/tr069-srv
+
+COPY tr069-acs/config/config.json /home/tr069-acs/genieacs/config/config.json
+COPY tr069-acs/genieacs/lib/* /home/tr069-acs/genieacs/lib/
+
+COPY mysql/init.sql /home/init.sql
+COPY container_start/init_run.sh /home/init_run.sh
+COPY system_info.json /home/system_info.json
+RUN chmod 755 /home/init_run.sh
+WORKDIR /home
+
+CMD ["/home/init_run.sh"]
+
+

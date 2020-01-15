@@ -1,0 +1,61 @@
+FROM ubuntu:18.04
+MAINTAINER tbwl
+
+#RUN apt-get update \
+#    && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+#    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+#ENV LANG en_US.utf8
+
+RUN sed -i "s/deb .*com\/ubuntu/deb http:\/\/mirrors.tuna.tsinghua.edu.cn\/ubuntu/g" /etc/apt/sources.list \
+    && sed -i "s/deb-src .*com\/ubuntu/deb-src http:\/\/mirrors.tuna.tsinghua.edu.cn\/ubuntu/g" /etc/apt/sources.list\
+    && echo "nameserver 8.8.8.8" > /etc/resolv.conf \
+    && apt-get update --fix-missing\
+    && apt-get -y install busybox git mongodb npm lsb-release curl libxml2 libxml2-dev redis-server psmisc nginx mysql-server\
+    && npm install npm -g \
+    && mkdir -p /data/db \
+    && mkdir /home/tr069-acs \
+    && mkdir /var/log/tr069-acs -p \
+    && cd /home/tr069-acs \
+    && curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh \
+    && chmod +x nodesource_setup.sh \
+    && ./nodesource_setup.sh \
+    && git clone https://github.com/genieacs/genieacs.git \
+    && cd genieacs \
+    && git checkout $(git tag -l v1.1.* --sort=-v:refname | head -n 1) \
+    && npm install \
+    && npm run compile \
+    && cp /home/tr069-acs/genieacs/config/config-sample.json /home/tr069-acs/genieacs/config/config.json \
+    && cp /home/tr069-acs/genieacs/config/auth-sample.js /home/tr069-acs/genieacs/config/auth.js \
+    && cp /home/tr069-acs/genieacs/config/ext-sample.js /home/tr069-acs/genieacs/config/ext.js \
+    && mkdir /home/tr069-srv
+
+# nginx配置文件
+COPY nginx/sites-available /etc/nginx/sites-available
+COPY nginx/sa /etc/nginx/sa
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+# acs 配置文件
+COPY tr069-acs/config/config.json /home/tr069-acs/genieacs/config/config.json
+COPY tr069-acs/genieacs/lib/* /home/tr069-acs/genieacs/lib/
+
+COPY web/ /var/www
+
+# tr069-srv
+COPY tr069-srv/ /home/tr069-srv
+RUN cd /home/tr069-srv && npm install --registry=http://registry.npm.taobao.org
+
+# 启动脚本
+COPY container_start/run.sh /home/run.sh
+RUN chmod 755 /home/run.sh
+
+WORKDIR /home
+
+EXPOSE 7547 7557 7567
+CMD ["/home/run.sh"]
+
+#docker build -t tr069_base:V1.0 .
+#docker login --username=tbwl --password=tbwl666
+#docker tag tr069_base:V1.0 tbwl/tr069_base:V1.0
+#docker push tbwl/tr069_base:V1.0
+

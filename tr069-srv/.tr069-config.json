@@ -1,0 +1,38 @@
+{
+  "CommonConfig": {
+    "OnlineTime": 360000,
+
+    "AccountDefaultPasswd": "88888888",
+    "TokenExpiresTime": 7200000,
+
+    "LogDir": "/var/log/tr069/",
+    "UpdateNewDevTime":   3600000,
+    "UpdateDevInfoTime":   120000,
+    "CheckDevTime":       300000,
+    "ClearDayOnlineTime": 86400000,
+    "SystemInfoPath": "/home/system_info.json",
+
+    "NbiDefaultProjection": "devId,status,devProductclass,softwareVersion,wlanSSID,ip,realIp,mac,memoryTotal,memoryFree,address,IMEI,upTime,lastActiveTime,proxyUser",
+    "NbiDefaultPageSize": 10,
+    "NbiDefaultPageNum": 1,
+
+    "WifiProbeEnable":    true,
+    "ClearWifiProbeTime": 300000,
+    "WifiProbeOvertime":  3600000,
+
+    "LinkTaskEnable":     true,
+    "LinkAccessFilePath": "/home/link_file",
+    "MakeLinkFileShFilePath": "/home/make_link_file.sh",
+
+    "EventNotifyEnable":  true,
+    "SendNotifyTime":     60000,
+
+    "DevAddrMapEnable":   true,
+	"DevMapDelayTime": 	600000,
+	"UpdateMapIntervalTime": 5000,
+	"UpdateMapNum": 5,
+
+	"ProxyUserEnable": true,
+	"OnlineTimeEnable": true
+  }
+}

@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  tr069:
+    container_name: tr069-api
+    restart: always
+    build: .
+    ports:
+     # - "80:80"
+      - "9000:8000"   # api 端口
+      - "9001:7547"   # cwmp 端口
+      - "9002:9002"   # FS  端口
+      - "9003:443"    # web
+    volumes:
+      - /var/tr069/web:/var/www
+      - /var/tr069/nginx/sites-available:/etc/nginx/sites-available
+      - /var/tr069/nginx/sa:/etc/nginx/sa
+      - /var/tr069/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /var/tr069/nginx/log:/var/log/nginx
+      - /var/tr069/server/log:/var/log/tr069
+      - /var/tr069/acs/log:/var/log/tr069-acs
+      - /var/tr069/mysql:/var/lib/mysql
+      - /var/tr069/mongodb:/var/lib/mongodb
+      - /var/tr069/data:/data/db
+      - /etc/localtime:/etc/localtime
+      - /etc/timezone:/etc/timezone
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    networks:
+      - tr069
+    
+networks:
+  tr069:
+
+

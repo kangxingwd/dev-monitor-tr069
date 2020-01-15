@@ -1,0 +1,50 @@
+{
+  "name": "tr069-apisrv",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "tsc && export PORT=7577 && node ./bin/www",
+    "windows_start": "tsc && set PORT=7577 && node ./bin/www",
+    "linux_start": "tsc && export PORT=7577 && nohup node ./bin/www &",
+    "linux_restart": "ps -ef | grep \"/bin/www\" |grep -v grep |  awk '{print $2}' | xargs kill -9 && npm run linux_start",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/bluebird": "^3.5.24",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/dateformat": "^1.0.1",
+    "@types/express": "^4.16.0",
+    "@types/http-errors": "^1.6.1",
+    "@types/morgan": "^1.7.35",
+    "@types/mysql": "^2.15.5",
+    "@types/redis": "^2.8.8",
+    "@types/request": "^2.47.1",
+    "@types/superagent": "^3.8.5",
+    "@types/xml2js": "^0.4.3",
+    "bluebird": "^3.5.3",
+    "child_process": "^1.0.2",
+    "cookie-parser": "~1.4.3",
+    "dateformat": "^3.0.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "http-errors": "~1.6.2",
+    "iconv-lite": "^0.4.23",
+    "log4js": "^3.0.6",
+    "moment": "^2.22.2",
+    "morgan": "~1.9.0",
+    "mysql": "^2.16.0",
+    "node-cmd": "^3.0.0",
+    "node-xlsx": "^0.12.1",
+    "redis": "^2.8.0",
+    "request": "^2.87.0",
+    "superagent": "^4.0.0",
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.5.1",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.12",
+    "typescript": "^2.9.2"
+  }
+}
